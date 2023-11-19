@@ -1,27 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:notes/noteModel.dart';
+import 'package:notes/widgets/add_button_widget.dart';
+import 'package:notes/widgets/more_button_widget.dart';
 
 class AddNewNote extends StatefulWidget {
-  const AddNewNote({super.key});
+  const AddNewNote({super.key, required this.onAddTap});
+
+  final Function(Note) onAddTap;
 
   @override
   State<AddNewNote> createState() => _AddNewNoteState();
 }
 
 class _AddNewNoteState extends State<AddNewNote> {
-  Color? selectedColor;
+  final TextEditingController titleTEController = TextEditingController();
+  final TextEditingController descriptionTEController = TextEditingController();
+
+  Color? selectedColor = Colors.white;
 
   final List<Color> colorList = [
     Colors.white,
-    Colors.red,
-    Colors.green,
-    Colors.blue,
-    Colors.yellow,
-    Colors.orange,
-    Colors.purple,
-    Colors.teal,
-    Colors.pink,
-    Colors.cyan,
-    Colors.indigo,
+    Colors.red.shade100,
+    Colors.green.shade200,
+    Colors.blue.shade200,
+    Colors.yellow.shade100,
+    Colors.orange.shade100,
+    Colors.deepPurple.shade100,
+    Colors.teal.shade100,
+    Colors.pink.shade100,
+    Colors.cyan.shade200,
+    Colors.blue.shade100,
   ];
 
   @override
@@ -36,8 +44,16 @@ class _AddNewNoteState extends State<AddNewNote> {
               children: [
                 Container(
                   child: IconButton(
-                    onPressed: () {},
-                    icon: Icon(Icons.arrow_back),
+                    onPressed: () {
+                      Note note = Note(
+                        title: titleTEController.text.trim(),
+                        description: descriptionTEController.text.trim(),
+                        bgColor: selectedColor ?? Colors.white,
+                      );
+                      widget.onAddTap(note);
+                      Navigator.pop(context);
+                    },
+                    icon: const Icon(Icons.arrow_back),
                   ),
                 ),
                 Container(
@@ -45,15 +61,15 @@ class _AddNewNoteState extends State<AddNewNote> {
                     children: [
                       IconButton(
                         onPressed: () {},
-                        icon: Icon(Icons.push_pin_outlined),
+                        icon: const Icon(Icons.push_pin_outlined),
                       ),
                       IconButton(
                         onPressed: () {},
-                        icon: Icon(Icons.add_alert_outlined),
+                        icon: const Icon(Icons.add_alert_outlined),
                       ),
                       IconButton(
                         onPressed: () {},
-                        icon: Icon(Icons.archive_outlined),
+                        icon: const Icon(Icons.archive_outlined),
                       ),
                     ],
                   ),
@@ -63,6 +79,8 @@ class _AddNewNoteState extends State<AddNewNote> {
             Padding(
               padding: const EdgeInsets.only(left: 10, right: 10),
               child: TextFormField(
+                keyboardType: TextInputType.text,
+                controller: titleTEController,
                 decoration: const InputDecoration(
                   hintText: 'Title',
                   hintStyle: TextStyle(fontSize: 20),
@@ -74,6 +92,9 @@ class _AddNewNoteState extends State<AddNewNote> {
               child: Padding(
                 padding: const EdgeInsets.only(left: 10, right: 10),
                 child: TextFormField(
+                  keyboardType: TextInputType.multiline,
+                  maxLines: null,
+                  controller: descriptionTEController,
                   decoration: const InputDecoration(
                     hintText: 'Note',
                     border: InputBorder.none,
@@ -92,46 +113,7 @@ class _AddNewNoteState extends State<AddNewNote> {
                           showModalBottomSheet(
                               context: context,
                               builder: (context) {
-                                return Wrap(
-                                  children: [
-                                    GestureDetector(
-                                      onTap: () {},
-                                      child: const ListTile(
-                                        leading:
-                                            Icon(Icons.add_a_photo_outlined),
-                                        title: Text('Take photo'),
-                                      ),
-                                    ),
-                                    GestureDetector(
-                                      onTap: () {},
-                                      child: const ListTile(
-                                        leading: Icon(Icons.image_outlined),
-                                        title: Text('Add image'),
-                                      ),
-                                    ),
-                                    GestureDetector(
-                                      onTap: () {},
-                                      child: const ListTile(
-                                        leading: Icon(Icons.brush),
-                                        title: Text('Drawing'),
-                                      ),
-                                    ),
-                                    GestureDetector(
-                                      onTap: () {},
-                                      child: const ListTile(
-                                        leading: Icon(Icons.mic_none),
-                                        title: Text('Recording'),
-                                      ),
-                                    ),
-                                    GestureDetector(
-                                      onTap: () {},
-                                      child: const ListTile(
-                                        leading: Icon(Icons.check_box_outlined),
-                                        title: Text('Checkboxes'),
-                                      ),
-                                    ),
-                                  ],
-                                );
+                                return const AddButtonWidget();
                               });
                         },
                         icon: const Icon(Icons.add_box_outlined),
@@ -208,11 +190,6 @@ class _AddNewNoteState extends State<AddNewNote> {
                                                           shape:
                                                               BoxShape.circle,
                                                           color: Colors.blue),
-                                                  child: Text(
-                                                    'Color ${index + 1}',
-                                                    style: TextStyle(
-                                                        color: Colors.white),
-                                                  ),
                                                 );
                                               }),
                                         ),
@@ -240,52 +217,7 @@ class _AddNewNoteState extends State<AddNewNote> {
                     showModalBottomSheet(
                         context: context,
                         builder: (context) {
-                          return Wrap(
-                            children: [
-                              GestureDetector(
-                                onTap: () {},
-                                child: const ListTile(
-                                  leading: Icon(Icons.delete_forever_outlined),
-                                  title: Text('Delete'),
-                                ),
-                              ),
-                              GestureDetector(
-                                onTap: () {},
-                                child: const ListTile(
-                                  leading: Icon(Icons.copy_rounded),
-                                  title: Text('Make a copy'),
-                                ),
-                              ),
-                              GestureDetector(
-                                onTap: () {},
-                                child: const ListTile(
-                                  leading: Icon(Icons.share),
-                                  title: Text('Send'),
-                                ),
-                              ),
-                              GestureDetector(
-                                onTap: () {},
-                                child: const ListTile(
-                                  leading: Icon(Icons.person_add_alt_outlined),
-                                  title: Text('Collaborator'),
-                                ),
-                              ),
-                              GestureDetector(
-                                onTap: () {},
-                                child: const ListTile(
-                                  leading: Icon(Icons.label_outline),
-                                  title: Text('Labels'),
-                                ),
-                              ),
-                              GestureDetector(
-                                onTap: () {},
-                                child: const ListTile(
-                                  leading: Icon(Icons.help_outline_outlined),
-                                  title: Text('Help & feedback'),
-                                ),
-                              ),
-                            ],
-                          );
+                          return const MoreButtonWidget();
                         });
                   },
                   icon: const Icon(Icons.more_vert),
@@ -302,5 +234,12 @@ class _AddNewNoteState extends State<AddNewNote> {
     setState(() {
       selectedColor = color;
     });
+  }
+
+  @override
+  void dispose() {
+    titleTEController.dispose();
+    descriptionTEController.dispose();
+    super.dispose();
   }
 }
