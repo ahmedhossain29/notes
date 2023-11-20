@@ -63,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => UpdateNote(
+                                builder: (context) => UpdateNoteScreen(
                                     note: note,
                                     onNoteUpdate: (
                                       String updateNoteText,
@@ -72,6 +72,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                       updateNote(index, updateNoteText,
                                           updateDescriptionText);
                                     })));
+                      },
+                      onLongPress: () {
+                        // Design
                       },
                       child: Card(
                         color: note.bgColor,
@@ -113,7 +116,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void updateNote(int index, String noteTitle, noteDescription) {
     noteList[index].title = noteTitle;
-    noteList[index].title = noteDescription;
+    noteList[index].description = noteDescription;
     setState(() {});
   }
 

@@ -6,7 +6,7 @@ import 'package:notes/widgets/more_button_widget.dart';
 class AddNewNote extends StatefulWidget {
   const AddNewNote({super.key, required this.onAddTap});
 
-  final Function(Note) onAddTap;
+  final void Function(Note) onAddTap;
 
   @override
   State<AddNewNote> createState() => _AddNewNoteState();
