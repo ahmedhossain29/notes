@@ -3,29 +3,31 @@ import 'package:notes/noteModel.dart';
 import 'package:notes/widgets/add_button_widget.dart';
 import 'package:notes/widgets/more_button_widget.dart';
 
-class UpdateNote extends StatefulWidget {
-  const UpdateNote({super.key, required this.note, required this.onNoteUpdate});
+class UpdateNoteScreen extends StatefulWidget {
+  const UpdateNoteScreen(
+      {super.key, required this.note, required this.onNoteUpdate});
 
   final Note note;
-  final Function(
+  final void Function(
     String,
     String,
   ) onNoteUpdate;
 
   @override
-  State<UpdateNote> createState() => _UpdateNoteState();
+  State<UpdateNoteScreen> createState() => _UpdateNoteScreenState();
 }
 
-class _UpdateNoteState extends State<UpdateNote> {
-  late TextEditingController titleTEController;
-  late TextEditingController descriptionTEController;
+class _UpdateNoteScreenState extends State<UpdateNoteScreen> {
+  late TextEditingController noteTitleTEController;
+  late TextEditingController noteDescriptionTEController;
 
   @override
   void initState() {
     super.initState();
-    titleTEController = TextEditingController(text: widget.note.title);
-    descriptionTEController =
+    noteTitleTEController = TextEditingController(text: widget.note.title);
+    noteDescriptionTEController =
         TextEditingController(text: widget.note.description);
+    selectedColor = widget.note.bgColor;
   }
 
   Color? selectedColor = Colors.white;
@@ -47,7 +49,7 @@ class _UpdateNoteState extends State<UpdateNote> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //backgroundColor:
+      backgroundColor: selectedColor,
       body: SafeArea(
         child: Column(
           children: [
@@ -58,8 +60,8 @@ class _UpdateNoteState extends State<UpdateNote> {
                   child: IconButton(
                     onPressed: () {
                       widget.onNoteUpdate(
-                        titleTEController.text.trim(),
-                        descriptionTEController.text.trim(),
+                        noteTitleTEController.text.trim(),
+                        noteDescriptionTEController.text.trim(),
                       );
 
                       Navigator.pop(context);
@@ -79,19 +81,21 @@ class _UpdateNoteState extends State<UpdateNote> {
                         icon: const Icon(Icons.add_alert_outlined),
                       ),
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
                         icon: const Icon(Icons.archive_outlined),
                       ),
                     ],
                   ),
-                )
+                ),
               ],
             ),
             Padding(
               padding: const EdgeInsets.only(left: 10, right: 10),
               child: TextFormField(
                 keyboardType: TextInputType.text,
-                controller: titleTEController,
+                controller: noteTitleTEController,
                 decoration: const InputDecoration(
                   hintText: 'Title',
                   hintStyle: TextStyle(fontSize: 20),
@@ -105,7 +109,7 @@ class _UpdateNoteState extends State<UpdateNote> {
                 child: TextFormField(
                   keyboardType: TextInputType.multiline,
                   maxLines: null,
-                  controller: descriptionTEController,
+                  controller: noteDescriptionTEController,
                   decoration: const InputDecoration(
                     hintText: 'Note',
                     border: InputBorder.none,
@@ -249,8 +253,8 @@ class _UpdateNoteState extends State<UpdateNote> {
 
   @override
   void dispose() {
-    titleTEController.dispose();
-    descriptionTEController.dispose();
+    noteTitleTEController.dispose();
+    noteDescriptionTEController.dispose();
     super.dispose();
   }
 }
