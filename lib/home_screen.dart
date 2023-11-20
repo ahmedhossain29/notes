@@ -74,7 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     })));
                       },
                       onLongPress: () {
-                        // Design
+                        // Design Next Day
                       },
                       child: Card(
                         color: note.bgColor,
