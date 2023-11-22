@@ -45,12 +45,6 @@ class _AddNewNoteState extends State<AddNewNote> {
                 Container(
                   child: IconButton(
                     onPressed: () {
-                      Note note = Note(
-                        title: titleTEController.text.trim(),
-                        description: descriptionTEController.text.trim(),
-                        bgColor: selectedColor ?? Colors.white,
-                      );
-                      widget.onAddTap(note);
                       Navigator.pop(context);
                     },
                     icon: const Icon(Icons.arrow_back),
@@ -59,17 +53,25 @@ class _AddNewNoteState extends State<AddNewNote> {
                 Container(
                   child: Row(
                     children: [
+                      // IconButton(
+                      //   onPressed: () {},
+                      //   icon: const Icon(Icons.push_pin_outlined),
+                      // ),
                       IconButton(
                         onPressed: () {},
-                        icon: const Icon(Icons.push_pin_outlined),
+                        icon: const Icon(Icons.camera_alt_outlined),
                       ),
                       IconButton(
-                        onPressed: () {},
-                        icon: const Icon(Icons.add_alert_outlined),
-                      ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: const Icon(Icons.archive_outlined),
+                        onPressed: () {
+                          Note note = Note(
+                            title: titleTEController.text.trim(),
+                            description: descriptionTEController.text.trim(),
+                            bgColor: selectedColor ?? Colors.white,
+                          );
+                          widget.onAddTap(note);
+                          Navigator.pop(context);
+                        },
+                        icon: const Icon(Icons.done),
                       ),
                     ],
                   ),

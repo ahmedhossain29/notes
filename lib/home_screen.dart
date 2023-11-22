@@ -74,7 +74,47 @@ class _HomeScreenState extends State<HomeScreen> {
                                     })));
                       },
                       onLongPress: () {
-                        // Design Next Day
+                        showModalBottomSheet(
+                            context: context,
+                            builder: (context) {
+                              return Container(
+                                decoration: const BoxDecoration(
+                                  color: Colors.white,
+                                ),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    ListTile(
+                                      onTap: () {
+                                        deleteNote(index);
+                                        Navigator.pop(context);
+                                      },
+                                      leading: const Icon(
+                                          Icons.delete_outline_rounded),
+                                      title: const Text('Delete'),
+                                    ),
+                                    ListTile(
+                                      onTap: () {
+                                        Navigator.pop(context);
+                                      },
+                                      leading: const Icon(Icons.copy_rounded),
+                                      title: const Text('Make a copy'),
+                                    ),
+                                    ListTile(
+                                      onTap: () {
+                                        Navigator.pop(context);
+                                      },
+                                      leading: const Icon(Icons.share),
+                                      title: const Text('Share'),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            });
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) => const CustomAppBar()));
                       },
                       child: Card(
                         color: note.bgColor,
