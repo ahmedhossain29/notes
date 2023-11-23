@@ -39,7 +39,7 @@ class _BottomNavBarWidgetState extends State<BottomNavBarWidget> {
                 _showDetailsScreen();
               }
             },
-            child: Text('Take Photo'),
+            child: const Text('Take Photo'),
           ),
           ElevatedButton(
             onPressed: () async {
@@ -53,7 +53,7 @@ class _BottomNavBarWidgetState extends State<BottomNavBarWidget> {
                 _showDetailsScreen();
               }
             },
-            child: Text('Choose Image'),
+            child: const Text('Choose Image'),
           ),
         ],
       ),
