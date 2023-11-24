@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:notes/add_image_note_page.dart';
 import 'package:notes/update_note_screen.dart';
 import 'package:notes/widgets/app_bar_widget.dart';
-import 'package:notes/widgets/bottom_nav_bar_widget.dart';
 
 import 'add_new_note_screen.dart';
 import 'noteModel.dart';
@@ -16,6 +17,24 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   List<Note> noteList = [];
+  late ImagePicker _imagePicker;
+  String? _selectedImagePath;
+
+  @override
+  void initState() {
+    super.initState();
+    _imagePicker = ImagePicker();
+  }
+
+  void _showDetailsScreen() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => AddImageNotePage(
+          imagePath: _selectedImagePath!,
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -111,10 +130,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                               );
                             });
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //         builder: (context) => const CustomAppBar()));
                       },
                       child: Card(
                         color: note.bgColor,
@@ -133,6 +148,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                               ),
                               Text(note.description),
+                              //Image(image: note.noteImage),
                             ],
                           ),
                         ),
@@ -142,7 +158,74 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-            const BottomNavBarWidget(),
+            Expanded(
+              child: Container(
+                color: Colors.white,
+                child: Row(
+                  children: [
+                    IconButton(
+                      onPressed: () {},
+                      icon: const Icon(Icons.check_box_outlined),
+                    ),
+                    IconButton(
+                      onPressed: () {},
+                      icon: const Icon(Icons.brush),
+                    ),
+                    IconButton(
+                      onPressed: () {},
+                      icon: const Icon(Icons.mic_none),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                title: const Text('Add image'),
+                                actions: [
+                                  ListTile(
+                                    onTap: () async {
+                                      Navigator.of(context).pop();
+                                      final image =
+                                          await _imagePicker.pickImage(
+                                              source: ImageSource.camera);
+                                      if (image != null) {
+                                        setState(() {
+                                          _selectedImagePath = image.path;
+                                        });
+                                        _showDetailsScreen();
+                                      }
+                                    },
+                                    leading:
+                                        const Icon(Icons.camera_alt_outlined),
+                                    title: const Text('Take photo'),
+                                  ),
+                                  ListTile(
+                                    onTap: () async {
+                                      Navigator.of(context).pop();
+                                      final image =
+                                          await _imagePicker.pickImage(
+                                              source: ImageSource.gallery);
+                                      if (image != null) {
+                                        setState(() {
+                                          _selectedImagePath = image.path;
+                                        });
+                                        _showDetailsScreen();
+                                      }
+                                    },
+                                    leading: const Icon(Icons.image_outlined),
+                                    title: const Text('Choose photo'),
+                                  ),
+                                ],
+                              );
+                            });
+                      },
+                      icon: const Icon(Icons.image_outlined),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
       ),
