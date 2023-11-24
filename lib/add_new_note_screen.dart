@@ -53,10 +53,6 @@ class _AddNewNoteState extends State<AddNewNote> {
                 Container(
                   child: Row(
                     children: [
-                      // IconButton(
-                      //   onPressed: () {},
-                      //   icon: const Icon(Icons.push_pin_outlined),
-                      // ),
                       IconButton(
                         onPressed: () {},
                         icon: const Icon(Icons.camera_alt_outlined),
