@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 
+import 'ImageNote.dart';
+
 class AddImageNotePage extends StatefulWidget {
   final String imagePath;
   const AddImageNotePage({
@@ -31,7 +33,14 @@ class _AddImageNotePageState extends State<AddImageNotePage> {
         ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                    builder: (context) => ImageNote(
+                          Imageurl: widget.imagePath,
+                        )),
+              );
+            },
             icon: const Icon(Icons.done),
           ),
         ],
